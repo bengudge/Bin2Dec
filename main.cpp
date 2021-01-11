@@ -1,5 +1,8 @@
 #include <iostream>
+#include <iomanip>
 #include <math.h>
+
+//Use gmp to make big integers unusable
 
 using namespace std;
 
@@ -20,7 +23,7 @@ bool isBinary(int n) {
     }
 }
 
-int numberLength(int n) {
+int digitLength(int n) {
     int length = 0;
 
     while(n != 0) {
@@ -45,28 +48,27 @@ int power(int base, int exponent) {
 }
 
 int binToDec(int b) {
-    int binIndex, sum, j = 0;
-    int i = numberLength(b)-1;
+    int j = 0, binIndex = j, sum = j;
 
     while(b > 0) {
         j = b % 10;
 
         if (j == 1) {
-            sum += power(2, i);
+            sum += power(2, binIndex);
         }
         b /=  10;
-        i--;
+        binIndex++;
     }
     return sum;
 }
 
 int main() {
-    int num;
+    long num;
     string input;
 
-    cout << "+----------------------------------------------------------------------------------------+" << endl <<
-            " Binary to Decimal Conversion" << endl <<
-            "+----------------------------------------------------------------------------------------+" << endl;
+    cout << "+" << setfill('-') << setw(80) << "-" << "+" << endl;
+    cout << setfill(' ') << setw(26) << "" << "Binary to Decimal Conversion" << endl;
+    cout << "+" << setfill('-') << setw(80) << "-" << "+" << endl;
     cout << "Enter '0' to exit program." << endl;
 
     while(true) {
@@ -77,9 +79,9 @@ int main() {
             break;
         }
 
-        if(num > 1111111111) {
-            cout << "Number is too large! Sorry." << endl;
-            break;
+        if(digitLength(num) > 8) {
+            cout << "Number is too large! Try again." << endl;
+            continue;
         }
 
         if(!isBinary(num)) {
